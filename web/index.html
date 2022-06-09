@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <script src="eel.js"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/53/53133.png" />
+
+    
+    <title>Face_Recognition</title>
+</head>
+<body>
+
+
+    <div class="dropdown">
+        <button class="dropbtn"><i class="fa fa-bars" aria-hidden="true" ></i>
+        <div class="dropdown-content">
+          
+
+            <a onclick="face_rec()">Идентификация</a>
+            <a onclick="video()">Лицевая сетка</a>
+            <a onclick="readTextFile()">О программе</a>
+        
+        </div>
+    </div>
+
+    <input type="file" id = "first_input"/>
+    <input type="file" id = "second_input"/>
+    <input type="file" id = "third_input"/>
+
+
+    <img name="image" id = "image">
+    <img name="image_2" id = "image_2">
+
+    
+    <button id = "face_detection_btn" onclick = "button_show_faces()"><i class="fa fa-user-o"></i></button>
+    <button id = "face_detection_btn_2" onclick = "button_show_faces_2()"><i class="fa fa-user-o"></i></button>
+    <button id = "button_compare" onclick = "button_compare_faces()">Сравнить лица</button>
+
+    <button id = "age" onclick = "age()"><i class="fa fa-address-card" aria-hidden="true"></i></button>
+    <button id = "show_text_btn" onclick = "show_text_js()"><i class="fa fa-file-word-o" aria-hidden="true"></i></button>
+
+    <!-- <button id = "spravka" onclick = "readTextFile()">Справка</button> -->
+    <!-- <button id = "video" onclick = "video()">MediaPipe</button> -->
+    
+   
+    <p id ="Paragraph" ></p>
+    <p id ="Paragraph2" ></p>
+    <p id ="Paragraph3" ></p>
+    <p id ="Paragraph4" ></p>
+    <p id ="Paragraph5" ></p>
+  
+
+    <div class="b-1"></div>
+
+    <button id="input_files"><i class="fa fa-folder"></i></button>
+    <button id="input_files_2"><i class="fa fa-folder"></i></button>
+    <button id="input_files_3"><i class="fa fa-window-restore" aria-hidden="true"></i></button>
+
+    <h1 class = "text_title">РАСПОЗНАВАНИЕ ЛИЦ</h1>
+    
+    <p><img id ="loop" src="https://stepik.org/media/users/135039921/avatar.png?1570389967" alt="Письма мастера дзен" ></p>
+    
+<script>
+
+    const fileInput = document.querySelector('#first_input');
+    
+    //Превращаем input в кнопку
+    const open = document.getElementById('input_files')
+    open.classList.add('btn')
+
+    fileInput.insertAdjacentElement('afterend', open)
+    const triggerInput = () => fileInput.click()
+    open.addEventListener( 'click', triggerInput)
+
+    fileInput.addEventListener('change', (e) => {
+       
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            
+            const base64String = reader.result
+                .replace('data:', '')
+                .replace(/^.+,/, '');
+            console.log(base64String);
+
+            uploaded_image = reader.result;
+            document.querySelector("#image").style.backgroundImage = 'url('+uploaded_image+')';
+
+            
+            from_js(base64String)
+        };
+        reader.readAsDataURL(file);
+
+    });
+
+
+    const fileInput_2 = document.querySelector('#second_input');
+
+    //Превращаем input в кнопку
+    const open_2 = document.getElementById('input_files_2')
+    open_2.classList.add('btn_2')
+    
+
+    fileInput_2.insertAdjacentElement('afterend',  open_2)
+    const triggerInput_2 = () => fileInput_2.click()
+    open_2.addEventListener( 'click', triggerInput_2)
+    //////////////////////
+
+    fileInput_2.addEventListener('change', (c) => {
+
+        const file_2 = c.target.files[0];
+
+    
+        const reader_2 = new FileReader();
+        reader_2.onloadend = () => {
+           
+            const base64String_2 = reader_2.result
+                .replace('data:', '')
+                .replace(/^.+,/, '');
+            
+            uploaded_image_2 = reader_2.result;
+            document.querySelector("#image_2").style.backgroundImage = 'url('+uploaded_image_2+')';
+         
+       
+            
+            from_js_2(base64String_2)
+        };
+        reader_2.readAsDataURL(file_2);
+
+    
+    });
+    
+    
+    const fileInput_3 = document.querySelector('#third_input');
+
+    const open_3 = document.getElementById('input_files_3')
+    open_3.classList.add('btn_3')
+    
+
+    fileInput_3.insertAdjacentElement('afterend',  open_3)
+    const triggerInput_3 = () => fileInput_3.click()
+    open_3.addEventListener( 'click', triggerInput_3)
+    //////////////////////
+
+    fileInput_3.addEventListener('change', (c) => {
+        const file_3 = c.target.files[0];
+
+        const reader_3 = new FileReader();
+        reader_3.onloadend = () => {
+   
+            const base64String_3 = reader_3.result
+                .replace('data:', '')
+                .replace(/^.+,/, '');
+
+            console.log(base64String_3);
+         
+            
+            from_js_3(base64String_3)
+        };
+        reader_3.readAsDataURL(file_3);
+
+    });
+
+</script>
+
+</body>
+</html>
